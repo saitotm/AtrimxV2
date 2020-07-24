@@ -8,10 +8,20 @@ namespace AtrimxV2
     {
     public:
         typedef typename internal::traits<Derived>::Scalar Scalar;
-        typedef typename internal::add_const<internal::eval<Derived>::type>::type EvalReturnType;
+        typedef typename internal::add_const<typename internal::eval<Derived>::type>::type EvalReturnType;
 
-        int rows();
-        int cols();
+        enum
+        {
+            Rows = internal::traits<Derived>::Rows,
+            Cols = internal::traits<Derived>::Cols,
+            Size = internal::array_size<Derived>::value
+        };
+
+        Derived &derived() { return *static_cast<Derived *>(this); }
+        const Derived &derived() const { return *static_cast<const Derived *>(this); }
+
+        inline int rows() { return derived().rows(); }
+        inline int cols() { return derived().cols(); }
 
         bool is_zeros();
         bool is_ones();
@@ -21,8 +31,6 @@ namespace AtrimxV2
         EvalReturnType eval() const;
         CommaInitializer<Derived> &operator<<(Scalar &s);
     };
-    template <typename Derived>
-    std::ostream &operator<<(std::ostream &os, const DenseBase<Derived> &other) const;
 } // namespace AtrimxV2
 
 #endif

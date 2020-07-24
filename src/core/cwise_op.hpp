@@ -8,6 +8,11 @@ namespace AtrimxV2
         template <typename LhsType_, typename RhsType_>
         struct traits<CwiseBinaryOp<LhsType_, RhsType_>>
         {
+            enum
+            {
+                Rows = traits<LhsType_>::Rows,
+                Cols = traits<LhsType_>::Cols
+            };
             typedef traits<LhsType_>::XprKind XprKind;
         };
     } // namespace internal
@@ -21,6 +26,9 @@ namespace AtrimxV2
     template <typename LhsType_, typename RhsType_>
     struct CwiseBinaryOp : public CwiseBinaryOpImpl<LhsType_, RhsType_>
     {
+    public:
+        inline int rows() { return Rows; }
+        inline int cols() { return Cols; }
     };
 
 } // namespace AtrimxV2

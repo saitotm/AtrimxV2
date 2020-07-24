@@ -9,16 +9,23 @@ namespace AtrimxV2
         struct traits<Array<Scalar_, Rows_, Cols_>>
         {
             typedef Scalar_ Scalar;
-            typedef Rows_ Rows;
-            typedef Cols_ Cols;
 
-            typedef ArrayXpr XprType;
-        }
+            typedef ArrayXpr XprKind;
+
+            enum
+            {
+                Rows = Rows_,
+                Cols = Cols_
+            };
+        };
     } // namespace internal
 
     template <typename Scalar_, int Rows_, int Cols_>
     class Array : public PlainObjectBase<Array<Scalar_, Row_, Cols_>>
     {
+    public:
+        // inline int const rows() { return Rows_; }
+        // inline int const cols() { return Cols_; }
     };
 } // namespace AtrimxV2
 

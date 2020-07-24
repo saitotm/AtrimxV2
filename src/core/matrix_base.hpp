@@ -6,14 +6,36 @@ namespace AtrimxV2
     template <typename Derived>
     class MatrixBase : public DenseBase<Derived>
     {
+    public:
         typedef typename internal::traits<Derived>::Scalar Scalar;
 
-    public:
-        Scalar norm() const;
-        void &normalize();
+        typedef DenseBase<Derived> Base;
+        using Base::Cols;
+        using Base::Rows;
+        using Base::Size;
 
-        CwiseBinaryOp &operator+(const MatrixBase<Derived> &other) const;
-        CwiseBinaryOp &operator-(const MatrixBase<Derived> &other) const;
+        using Base::cols;
+        using Base::derived;
+        //using Base::eval;
+        using Base::rows;
+        /*
+        using Base::operator+=;
+        using Base::operator-=;
+        using Base::operator*=;
+        using Base::operator/=;
+        */
+
+        Scalar norm() const;
+        void normalize();
+
+        template <typename OtherDerived>
+        CwiseBinaryOp<Derived, OtherDerived> &operator+(const MatrixBase<OtherDerived> &other) const;
+
+        template <typename OtherDerived>
+        CwiseBinaryOp<Derived, OtherDerived> &operator-(const MatrixBase<OtherDerived> &other) const;
+
+    protected:
+        MatrixBase() : Base() {}
     };
 } // namespace AtrimxV2
 #endif

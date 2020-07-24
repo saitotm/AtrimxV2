@@ -1,3 +1,6 @@
+#ifndef __ATRIMXV2_CONSTANT_HPP__
+#define __ATRIMXV2_CONSTANT_HPP__
+
 namespace AtrimxV2
 {
     namespace internal
@@ -11,3 +14,5 @@ namespace AtrimxV2
 
     } // namespace internal
 } // namespace AtrimxV2
+
+#endif

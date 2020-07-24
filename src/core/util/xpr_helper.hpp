@@ -1,15 +1,22 @@
+#ifndef __ATRIMXV2_XPR_HELPER_HPP__
+#define __ATRIMXV2_XPR_HELPER_HPP__
+
+#include "meta.hpp"
+
 namespace AtrimxV2
 {
     namespace internal
     {
-
-        template <typename T>
-        struct add_const
+        template <typename Derived>
+        struct array_size
         {
-            typedef const T type;
+            enum
+            {
+                value = mult_int<traits<Derived>::Rows, traits<Derived>::Cols>::value
+            };
         };
 
-        template <typename T, typename XprKind = traits<T>::XprKind>
+        template <typename T, typename XprKind = typename traits<T>::XprKind>
         struct xpr_base;
 
         template <typename Derived>
@@ -24,19 +31,19 @@ namespace AtrimxV2
             typedef ArrayBase<Derived> type;
         };
 
-        template <typename T, typename BaseClassType = traits<T>::XprKind>
+        template <typename T, typename BaseClassType = typename traits<T>::XprKind>
         struct plain_matrix_type;
 
         template <typename T>
         struct plain_matrix_type<T, MatrixXpr>
         {
-            typedef Matrix<traits<T>::Scalar, traits<T>::Rows, traits<T>::Cols> type;
+            typedef Matrix<typename traits<T>::Scalar, traits<T>::Rows, traits<T>::Cols> type;
         };
 
         template <typename T>
         struct plain_matrix_type<T, ArrayXpr>
         {
-            typedef Array<traits<T>::Scalar, traits<T>::Rows, traits<T>::Cols> type;
+            typedef Array<typename traits<T>::Scalar, traits<T>::Rows, traits<T>::Cols> type;
         };
 
         template <typename T>
@@ -45,13 +52,15 @@ namespace AtrimxV2
         template <typename Scalar_, int Rows_, int Cols_>
         struct eval<Matrix<Scalar_, Rows_, Cols_>>
         {
-            typedef const typename Matrix<Scalar_, Rows_, Cols_> &type;
+            typedef const Matrix<Scalar_, Rows_, Cols_>& type;
         };
 
         template <typename Scalar_, int Rows_, int Cols_>
         struct eval<Array<Scalar_, Rows_, Cols_>>
         {
-            typedef const typename Array<Scalar_, Rows_, Cols_> &type;
+            typedef const Array<Scalar_, Rows_, Cols_>& type;
         };
     } // namespace internal
 } // namespace AtrimxV2
+
+#endif

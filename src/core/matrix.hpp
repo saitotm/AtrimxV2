@@ -9,22 +9,36 @@ namespace AtrimxV2
         struct traits<Matrix<Scalar_, Rows_, Cols_>>
         {
             typedef Scalar_ Scalar;
-            typedef Rows_ Rows;
-            typedef Cols_ Cols;
 
-            typedef MatrixXpr XprType;
+            enum
+            {
+                Rows = Rows_,
+                Cols = Cols_
+            };
+
+            typedef MatrixXpr XprKind;
         };
     } // namespace internal
 
     template <typename Scalar_, int Rows_, int Cols_>
     class Matrix : public PlainObjectBase<Matrix<Scalar_, Rows_, Cols_>>
     {
-        Matrix();
-        int rows();
-        int cols();
+    public:
+        typedef PlainObjectBase<Matrix> Base;
+        Matrix() : Base()
+        {
+        }
+
+        Matrix(const Matrix &other) : Base(other) {}
 
         template <typename OtherDerived>
-        Matrix<Scalar_, Rows_, Cols_> operator=(const DenseBase<OtherDerived> &other);
+        Matrix(const DenseBase<OtherDerived> &other) : Base(other.derived()) {}
+
+        template <typename OtherDerived>
+        inline Matrix &operator=(const DenseBase<OtherDerived> &other)
+        {
+            return Base::operator=(other);
+        }
     };
 } // namespace AtrimxV2
 #endif
