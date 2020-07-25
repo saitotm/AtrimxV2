@@ -1,6 +1,8 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <random>
+#include <type_traits>
 
 #include "core/util/constant.hpp"
 #include "core/util/meta.hpp"

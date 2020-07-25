@@ -22,6 +22,15 @@ namespace AtrimxV2
         inline Scalar &operator()(int row, int col) { return coeffRef(row, col); }
         inline const Scalar &operator()(int row, int col) const { return coeff(row, col); }
 
+        void random(const Scalar &min, const Scalar &max, const int &seed)
+        {
+            std::mt19937 mt(seed);
+            std::uniform_real_distribution<> rand(min, max);
+            for (int i = 0; i < rows(); i++)
+                for (int j = 0; j < cols(); j++)
+                        coeffRef(i, j) = rand(mt);
+        }
+
     protected:
         PlainObjectBase()
         {
