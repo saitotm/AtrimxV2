@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 
 #include "core/util/constant.hpp"
 #include "core/util/meta.hpp"

@@ -29,7 +29,7 @@ namespace AtrimxV2
         bool any();
 
         EvalReturnType eval() const;
-        CommaInitializer<Derived> &operator<<(Scalar &s);
+        CommaInitializer<Derived> &operator<<(const Scalar &s);
     };
 } // namespace AtrimxV2
 

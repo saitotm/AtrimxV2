@@ -1,36 +1,16 @@
-#include "cppunit/ui/text/TestRunner.h"
-#include "cppunit/extensions/HelperMacros.h"
-#include "cppunit/TexOutputter.h"
+#include "gtest/gtest.h"
 
-class BinaryOpTest : public CppUnit::TextFixture
-{
-    CPPUNIT_TEST_SUITE(BinaryOpTest);
-    CPPUNIT_TEST(matrix_sum_test);
-    CPPUNIT_TEST_SUITE_END();
+#include "../src/atrimxv2.hpp"
 
-public:
-    void matrix_int_sum_test()
-    {
-        AtrimxV2::Matrix<int, 1, 1> m1;
-        AtrimxV2::Matrix<int, 1, 1> m2;
-        (m1 + m2).a\
-    }
-    void matrix_float_sum_test()
-    {
-        AtrimxV2::Matrixf<> 
-    }
+TEST(BinaryOpAddTest, 1x1) {
+    AtrimxV2::Matrix<int, 1, 1> m1;
+    AtrimxV2::Matrix<int, 1, 1> m2;
+    AtrimxV2::Matrix<int, 1, 1> res;
 
-};
-
-int main(int argc, char *argv[])
-{
-    CPPUNIT_TEST_SUITE_REGISTRATION(BinaryOpTest);
-
-    CppUnit::TextUI::TestRunner runner;
-    runner.addText(CppUnit::TestFactoryRegistry::getRegistry().makeTest());
-
-    CppUnit::Outputter *outputter = new CppUnit::TextOutputter(&runner.result(), std::cout);
-    runner.setOutputter(outputter);
-
-    return runner.run() ? 0 : 1;
+    int a = 3;
+    int b = 5;
+    m1 << a;
+    m2 << b;
+    res << a + b;
+    EXPECT_TRUE(res.is_approx(m1 + m2));
 }
